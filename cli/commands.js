@@ -9,6 +9,9 @@ module.exports = {
     'ci-cd': {
         desc: 'Create pipeline scripts for popular Continuous Integration/Continuous Deployment tools'
     },
+    'ci-cd-ecs': {
+        desc: 'Create pipeline scripts for popular Continuous Integration/Continuous Deployment tools with ECS Deploy'
+    },
     client: {
         desc: 'Create a new JHipster client-side application based on the selected options'
     },

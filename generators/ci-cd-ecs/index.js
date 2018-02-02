@@ -44,7 +44,7 @@ module.exports = class extends BaseGenerator {
     get initializing() {
         return {
             sayHello() {
-                this.log(chalk.white('Welcome to the JHipster CI/CD Sub-Generator'));
+                this.log(chalk.white('Welcome to the JHipster CI/CD with ECS Deployment Sub-Generator'));
             },
             getConfig() {
                 this.baseName = this.config.get('baseName');
@@ -84,7 +84,7 @@ module.exports = class extends BaseGenerator {
             insight() {
                 if (this.abort) return;
                 const insight = this.insight();
-                insight.trackWithEvent('generator', 'ci-cd');
+                insight.trackWithEvent('generator', 'ci-cd-ecs');
             },
             setTemplateConstants() {
                 if (this.abort || this.jenkinsIntegrations === undefined) return;
