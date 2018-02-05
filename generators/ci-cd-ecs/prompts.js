@@ -172,6 +172,34 @@ function askIntegrations() {
         {
             when: response => response.deployment.includes('deployECS'),
             type: 'input',
+            name: 'imageName',
+            message: 'What is your image name?',
+            default: 'default'
+        },
+        {
+            when: response => response.deployment.includes('deployECS'),
+            type: 'input',
+            name: 'cloudWatchLogGroup',
+            message: 'What is your CloudWatch group?',
+            default: 'default'
+        },
+        {
+            when: response => response.deployment.includes('deployECS'),
+            type: 'input',
+            name: 'clusterName',
+            message: 'What is your cluster name?',
+            default: 'default'
+        },
+        {
+            when: response => response.deployment.includes('deployECS'),
+            type: 'input',
+            name: 'targetGroupARN',
+            message: 'What is the target group ARN?',
+            default: 'default'
+        },
+        {
+            when: response => response.deployment.includes('deployECS'),
+            type: 'input',
             name: 'portNumber',
             message: 'What port number?',
             default: '8080'
