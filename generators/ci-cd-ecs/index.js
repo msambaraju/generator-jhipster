@@ -98,6 +98,7 @@ module.exports = class extends BaseGenerator {
     writing() {
         if (this.pipelines.includes('jenkins')) {
             this.template('jenkins/_Jenkinsfile', 'Jenkinsfile');
+            this.template('_ecs_cf_template.yml', 'ecs_cf_template.yml');
             this.template('jenkins/_jenkins.yml', `${this.DOCKER_DIR}jenkins.yml`);
             this.template('jenkins/idea.gdsl', `${this.SERVER_MAIN_RES_DIR}idea.gdsl`);
             if (this.jenkinsIntegrations.includes('publishDocker')) {

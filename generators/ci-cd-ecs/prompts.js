@@ -242,6 +242,16 @@ function askIntegrations() {
         this.gitlabUseDocker = props.gitlabUseDocker;
         this.heroku = props.heroku;
         this.deployment = props.deployment;
+        this.serviceName = props.serviceName;
+        this.imageName = props.imageName;
+        this.cloudWatchLogGroup = props.cloudWatchLogGroup;
+        this.clusterName = props.clusterName;
+        this.targetGroupARN = props.targetGroupARN;
+        this.portNumber = props.portNumber;
+        this.desiredCount = props.desiredCount;
+        this.ecsMemory = props.ecsMemory;
+        this.ecsCPU = props.ecsCPU;
+        this.iamRole = props.iamRole;
         done();
     });
 }
