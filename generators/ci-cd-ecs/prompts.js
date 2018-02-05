@@ -70,8 +70,10 @@ function askIntegrations() {
     }
     const done = this.async();
     const herokuChoices = [];
+    const ecsChoices = [];
     if (this.pipelines.includes('jenkins')) {
         herokuChoices.push({ name: 'In Jenkins pipeline', value: 'jenkins' });
+        ecsChoices.push({ name: 'In Jenkins pipeline', value: 'jenkins' });
     }
     if (this.pipelines.includes('gitlab')) {
         herokuChoices.push({ name: 'In GitLab CI', value: 'gitlab' });
@@ -95,6 +97,7 @@ function askIntegrations() {
                 { name: 'Analyze code with Sonar', value: 'sonar' },
                 { name: 'Send build status to GitLab', value: 'gitlab' },
                 { name: 'Build and publish a Docker image', value: 'publishDocker' }
+                //{ name: 'Deploy Docker Container to AWS ECS', value: 'deployECS' }
             ]
         },
         {
@@ -135,11 +138,37 @@ function askIntegrations() {
         {
             when: (this.pipelines.includes('jenkins') || this.pipelines.includes('gitlab') || this.pipelines.includes('circle') || this.pipelines.includes('travis')) && this.herokuAppName,
             type: 'checkbox',
+            name: 'deployment',
+            message: 'Would you like to deploy your application?',
+            default: [],
+            choices: [
+                { name: 'Deploy to Heroku', value: 'deployHeroku' },
+                { name: 'Deploy to AWS ECS', value: 'deployECS' }
+            ]
+        },
+        {
+            when: response => this.pipelines.includes('jenkins') && response.deployment.includes('deployHeroku'),
+            type: 'checkbox',
             name: 'heroku',
             message: 'Deploy to heroku?',
             default: [],
             choices: herokuChoices
-        }
+        },
+        {
+            when: response => this.pipelines.includes('jenkins') && response.deployment.includes('deployECS'),
+            type: 'checkbox',
+            name: 'awsEcs',
+            message: 'Deploy to AWS ECS?',
+            default: [],
+            choices: ecsChoices
+        },
+        {
+            when: response => this.pipelines.includes('jenkins') && response.awsEcs.includes('jenkins'),
+            type: 'input',
+            name: 'test value',
+            message: 'What is a test value?',
+            default: 'test-value'
+        },
     ];
     this.prompt(prompts).then((props) => {
         this.jenkinsIntegrations = props.jenkinsIntegrations;
