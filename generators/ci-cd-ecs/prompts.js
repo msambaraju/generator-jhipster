@@ -163,7 +163,7 @@ function askIntegrations() {
             choices: ecsChoices
         },
         {
-            when: response => this.pipelines.includes('jenkins') && response.awsEcs.includes('jenkins'),
+            when: response => response.deployment.includes('deployECS'),
             type: 'input',
             name: 'test value',
             message: 'What is a test value?',
