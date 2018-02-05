@@ -165,9 +165,44 @@ function askIntegrations() {
         {
             when: response => response.deployment.includes('deployECS'),
             type: 'input',
-            name: 'test value',
-            message: 'What is a test value?',
-            default: 'test-value'
+            name: 'serviceName',
+            message: 'What is your ECS service name?',
+            default: 'default'
+        },
+        {
+            when: response => response.deployment.includes('deployECS'),
+            type: 'input',
+            name: 'portNumber',
+            message: 'What port number?',
+            default: '8080'
+        },
+        {
+            when: response => response.deployment.includes('deployECS'),
+            type: 'input',
+            name: 'desiredCount',
+            message: 'How many container instances?',
+            default: '1'
+        },
+        {
+            when: response => response.deployment.includes('deployECS'),
+            type: 'input',
+            name: 'ecsMemory',
+            message: 'How much memory would you like allocated?',
+            default: '2048'
+        },
+        {
+            when: response => response.deployment.includes('deployECS'),
+            type: 'input',
+            name: 'ecsCPU',
+            message: 'How much CPU would you like allocated?',
+            default: '256'
+        },
+        {
+            when: response => response.deployment.includes('deployECS'),
+            type: 'input',
+            name: 'iamRole',
+            message: 'What is the IAM Role for your containers?',
+            default: 'default'
         },
     ];
     this.prompt(prompts).then((props) => {
