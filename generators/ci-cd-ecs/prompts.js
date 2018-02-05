@@ -241,6 +241,7 @@ function askIntegrations() {
         this.dockerRegistryOrganizationName = props.dockerRegistryOrganizationName;
         this.gitlabUseDocker = props.gitlabUseDocker;
         this.heroku = props.heroku;
+        this.deployment = props.deployment;
         done();
     });
 }
