@@ -40,12 +40,14 @@ Parameters:
         Description: The image name of the conatainer.
         Type: String
         Default: <%= imageName %>
-    
+        
+ <%_ if (targetGroupARN) { _%>   
     TargetGroup:
         Description: The target group of the load balancer to which the container is associated with.
         Type: String
         Default: <%= targetGroupARN %>
-    
+<%_ } _%>  
+
     Memory:
         Description: The memory that is allocated to the container.
         Type: Number
@@ -74,10 +76,12 @@ Resources:
             Role: !Ref IamRole
             DesiredCount: !Ref DesiredCount
             TaskDefinition: !Ref TaskDefinition
+<%_ if (targetGroupARN) { _%>
             LoadBalancers: 
                 - ContainerName: <%= serviceName %>
                   ContainerPort: <%= portNumber %>
                   TargetGroupArn: !Ref TargetGroup
+<%_ } _%>
 
     TaskDefinition:
         Type: AWS::ECS::TaskDefinition
