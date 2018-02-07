@@ -196,6 +196,9 @@ node {
 <%= gitLabIndent %>    }
     <%_ if (deployment.includes('deployECS')) { _%>
 <%= gitLabIndent %>    stage('deploy to AWS ECS') {
+<%= gitLabIndent %>        sh "aws s3 mb s3://<%= dockerRegistryOrganizationName %>"
+<%= gitLabIndent %>        sh "aws s3 cp ecs_cf_template.yml s3://<%= dockerRegistryOrganizationName %>/cloudformationtemplates/<%= baseName.toLowerCase() %>.template"
+<%= gitLabIndent %>        sh "aws cloudformation create-stack --stack-name <%= baseName.toLowerCase() %> --template-url s3://<%= dockerRegistryOrganizationName %>/cloudformationtemplates/<%= baseName.toLowerCase() %>.template"
 <%= gitLabIndent %>        docker.withRegistry('<%= dockerRegistryURL %>', '<%= dockerRegistryCredentialsId %>') {
 <%= gitLabIndent %>            dockerImage.push 'latest'
 <%= gitLabIndent %>        }
