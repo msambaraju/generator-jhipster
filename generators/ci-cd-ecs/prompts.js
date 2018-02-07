@@ -195,7 +195,7 @@ function askIntegrations() {
             type: 'input',
             name: 'targetGroupARN',
             message: 'What is the target group ARN?',
-            default: 'default'
+            default: 'none'
         },
         {
             when: response => response.deployment.includes('deployECS'),

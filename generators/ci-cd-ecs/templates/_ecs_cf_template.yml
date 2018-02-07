@@ -17,7 +17,7 @@
  limitations under the License.
 -%>
 Description: >
-    The template to create an ecs service and associate with a load balancer.
+    The template to create an ecs service and associate with a load balancer if provided.
 
 Parameters: 
 
@@ -40,8 +40,8 @@ Parameters:
         Description: The image name of the conatainer.
         Type: String
         Default: <%= imageName %>
-        
- <%_ if (targetGroupARN) { _%>   
+
+ <%_ if (targetGroupARN != 'none') { _%>
     TargetGroup:
         Description: The target group of the load balancer to which the container is associated with.
         Type: String
@@ -76,7 +76,7 @@ Resources:
             Role: !Ref IamRole
             DesiredCount: !Ref DesiredCount
             TaskDefinition: !Ref TaskDefinition
-<%_ if (targetGroupARN) { _%>
+<%_ if (targetGroupARN != 'none') { _%>
             LoadBalancers: 
                 - ContainerName: <%= serviceName %>
                   ContainerPort: <%= portNumber %>
