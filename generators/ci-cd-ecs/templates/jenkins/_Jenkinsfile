@@ -196,14 +196,21 @@ node {
 <%= gitLabIndent %>    }
     <%_ if (deployment.includes('deployECS')) { _%>
 <%= gitLabIndent %>    stage('deploy to AWS ECS') {
+<%= gitLabIndent %>    withCredentials([[
+<%= gitLabIndent %>        $class: 'AmazonWebServicesCredentialsBinding',
+<%= gitLabIndent %>        credentialsId: 'aws',
+<%= gitLabIndent %>        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+<%= gitLabIndent %>        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+<%= gitLabIndent %>        ]]) {
+<%= gitLabIndent %>
+<%= gitLabIndent %>
 <%= gitLabIndent %>        sh "aws s3 mb s3://<%= dockerRegistryOrganizationName %>"
+<%= gitLabIndent %>        sh "aws configure set default.region us-east-1"
 <%= gitLabIndent %>        sh "aws s3 cp ecs_cf_template.yml s3://<%= dockerRegistryOrganizationName %>/cloudformationtemplates/<%= baseName.toLowerCase() %>.template"
-<%= gitLabIndent %>        sh "aws cloudformation create-stack --stack-name <%= baseName.toLowerCase() %> --template-url s3://<%= dockerRegistryOrganizationName %>/cloudformationtemplates/<%= baseName.toLowerCase() %>.template"
-<%= gitLabIndent %>        docker.withRegistry('<%= dockerRegistryURL %>', '<%= dockerRegistryCredentialsId %>') {
-<%= gitLabIndent %>            dockerImage.push 'latest'
-<%= gitLabIndent %>        }
+<%= gitLabIndent %>        sh "aws cloudformation create-stack --stack-name <%= baseName.toLowerCase() %> --template-url https://s3.amazonaws.com/<%= dockerRegistryOrganizationName %>/cloudformationtemplates/<%= baseName.toLowerCase() %>.template"
 <%= gitLabIndent %>    }
-    <%_ } _%>
+<%= gitLabIndent %>}
+        <%_ } _%>
 <%_ } _%>
 <%_ if (jenkinsIntegrations.includes('gitlab')) { _%>
     }
