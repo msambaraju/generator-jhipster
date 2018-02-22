@@ -73,7 +73,9 @@ Resources:
         Type: AWS::ECS::Service
         Properties: 
             Cluster: !Ref Cluster
+<%_ if (targetGroupARN != 'none') { _%>
             Role: !Ref IamRole
+<%_ } _%>
             DesiredCount: !Ref DesiredCount
             TaskDefinition: !Ref TaskDefinition
 <%_ if (targetGroupARN != 'none') { _%>
